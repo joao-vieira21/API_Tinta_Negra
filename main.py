@@ -6,8 +6,15 @@ import json
 from dotenv import load_dotenv
 import os
 
-app = FastAPI()
+app = FastAPI(
+    title="API Tinta Negra",
+    description="""
+API para integração com Google Sheets.
 
+Permite envio (POST) e consulta (GET) de dados de forma simples,
+pensada para integração com microcontroladores (ESP32) e sistemas externos.
+"""
+)
 load_dotenv()
 
 google_key = os.getenv("GOOGLE_KEY")
