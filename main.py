@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -53,6 +53,14 @@ class Leitura(BaseModel):
 @app.get("/")
 def raiz():
     return {"status": "ok"}
+
+@app.get("/lersheets")
+def ler_todas(validacao_token: str = Header()):
+
+    if validacao_token != token:
+        raise HTTPException(status_code=401, detail="Acesso negado")
+
+    return aba.get_all_records()
 
 @app.post("/nova-leitura")
 def receber_leitura(leitura: Leitura):
