@@ -5,6 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import json
 from dotenv import load_dotenv
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="API Tinta Negra",
@@ -15,6 +16,17 @@ Permite envio (POST) e consulta (GET) de dados de forma simples,
 pensada para integração com microcontroladores (ESP32) e sistemas externos.
 """
 )
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 load_dotenv()
 
 google_key = os.getenv("GOOGLE_KEY")
